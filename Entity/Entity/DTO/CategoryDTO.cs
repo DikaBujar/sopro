@@ -5,15 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entity
+namespace Entity.DTO
 {
-    public class Category
+    public class CategoryDTO
     {
-        [Key]
-        public int ID { get; set; }
+        public int id { get; set; }
 
         [StringLength(maximumLength: 50)]
-        public string Name { get; set; }
-        public List<Bookmark> Bookmarks { get; set; }
+        public string name { get; set; }
+        public List<BookmarksDTO> BookmarksDTO { get; set; }
     }
 }
