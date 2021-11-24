@@ -1,0 +1,231 @@
+﻿@model Services.DTO.BookmarkDTO
+
+@{ ViewData["Title"] = "Create"; }
+
+<head>
+    <link href="~/lib/select2/css/select2.min.css" rel="stylesheet" />
+    <!-- select2-bootstrap4-theme -->
+    <link href="https://raw.githack.com/ttskch/select2-bootstrap4-theme/master/dist/select2-bootstrap4.css" rel="stylesheet">
+</head>
+
+<style>
+    /*--thank you pop starts here--*/
+    .thank-you-pop {
+        width: 100%;
+        padding: 20px;
+        text-align: center;
+    }
+
+        .thank-you-pop img {
+            width: 76px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+            margin-bottom: 25px;
+        }
+
+        .thank-you-pop h1 {
+            font-size: 42px;
+            margin-bottom: 25px;
+            color: #5C5C5C;
+        }
+
+        .thank-you-pop p {
+            font-size: 20px;
+            margin-bottom: 27px;
+            color: #5C5C5C;
+        }
+
+        .thank-you-pop h3.cupon-pop {
+            font-size: 25px;
+            margin-bottom: 40px;
+            color: #222;
+            display: inline-block;
+            text-align: center;
+            padding: 10px 20px;
+            border: 2px dashed #222;
+            clear: both;
+            font-weight: normal;
+        }
+
+            .thank-you-pop h3.cupon-pop span {
+                color: #03A9F4;
+            }
+
+        .thank-you-pop a {
+            display: inline-block;
+            margin: 0 auto;
+            padding: 9px 20px;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 14px;
+            background-color: #8BC34A;
+            border-radius: 17px;
+        }
+
+            .thank-you-pop a i {
+                margin-right: 5px;
+                color: #fff;
+            }
+
+    #ignismyModal .modal-header {
+        border: 0px;
+    }
+    /*--thank you pop ends here--*/
+
+</style>
+
+<h1>Create</h1>
+
+<h4>Bookmark</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" id="__AjaxAntiForgeryForm">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="url" class="control-label"></label>
+                <input asp-for="url" class="form-control" />
+                <span asp-validation-for="url" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="shortdescription" class="control-label"></label>
+                <input asp-for="shortdescription" class="form-control" />
+                <span asp-validation-for="shortdescription" class="text-danger"></span>
+            </div>
+
+            @if (ViewBag.select2 != null)
+            {
+<div class="form-group">
+    <label asp-for="category.Name" class="control-label"></label>
+    @*<select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>*@
+    @*<select asp-for="Category.Name"
+                class="form-control"
+                asp-items="@(new SelectList(ViewBag.test))">
+        </select>*@
+    @Html.DropDownListFor(x => x.category.Name, (SelectList)ViewBag.select2, new { @class = "js-example-basic-multiple form-control" })
+    <span asp-validation-for="category.Name" class="text-danger"></span>
+</div>            }
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-4">
+        <form>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="category" class="control-label"></label>
+                <input id="CategoryName" asp-for="category" class="form-control" />
+                <span asp-validation-for="category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input id="AddCategoryFromBookmark" value="Add" class="btn btn-primary" />
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="modal fade" id="ignismyModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label=""><span>×</span></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="thank-you-pop">
+                            <img src="http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png" alt="">
+                            <h1>Thank You!</h1>
+                            <p>The category was added</p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="modal fade" id="ignismyModalfalse" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label=""><span>×</span></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="thank-you-pop">
+                            <img src="https://www.pngfind.com/pngs/m/3-31254_red-cross-mark-clipart-black-background-red-x.png" alt="">
+                            <h1>Thank You!</h1>
+                            <p>The category exists</p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/lib/select2/js/select2.full.min.js"></script>
+    <script src="~/js/select2.js"></script>
+
+    <script>
+        $('#AddCategoryFromBookmark').click(function () {
+
+            var form = $('#__AjaxAntiForgeryForm');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var categoryName = $('#CategoryName').val();
+
+            $.ajax
+                ({
+                    url: '/Categories/Create',
+                    type: 'POST',
+                    data: {
+                        __RequestVerificationToken: token,
+                        Name: categoryName
+                    },
+                    contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                    success: function (result) {
+
+                        console.log(result);
+                        $('#ignismyModal').modal('show');
+                        $('#CategoryName').val("");
+
+
+                    },
+                    error: function (errors) {
+
+                        $('#ignismyModalfalse').modal('show');
+                    }
+                });
+        });
+    </script>
+
+    <script>
+        $(".js-example-basic-multiple").select2();
+    </script>
+
+}

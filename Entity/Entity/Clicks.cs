@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace Entity
 {
-    public class Category
+    public class Clicks
     {
         [Key]
         public int ID { get; set; }
-
-        [StringLength(maximumLength: 50)]
-        public string Name { get; set; }
+        [StringLength(maximumLength: 300)]
+        public string Url { get; set; }
+        public string UserID { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 }

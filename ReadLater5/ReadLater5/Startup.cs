@@ -1,13 +1,16 @@
 using Data;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Services;
+using Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,13 +35,29 @@ namespace ReadLater5
                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            //services.AddIdentity<IdentityUser, IdentityRole>()
-            //    .AddEntityFrameworkStores<ReadLaterDataContext>();
-
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ReadLaterDataContext>();
 
             services.AddScoped<ICategoryService, CategoryService>();
+
+            services.AddScoped<IBookmarkService, BookmarkService>();
+
+            services.AddScoped<IClickService, ClickService>();
+
+            //Email
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<MailKitEmailSenderOptions>(options =>
+            {
+                options.Host_Address = "smtp-relay.sendinblue.com";
+                options.Host_Port = 587;
+                options.Host_Username = "toiise@hotmail.com";
+                options.Host_Password = "V6XzUvKQDxsH5d7r";
+                options.Sender_EMail = "bujar_dika@hotmail.com";
+                options.Sender_Name = "Read Later";
+            });
+
+            var assembly = AppDomain.CurrentDomain.Load("Services");
+            services.AddMediatR(assembly);
 
             services.AddControllersWithViews();
         }

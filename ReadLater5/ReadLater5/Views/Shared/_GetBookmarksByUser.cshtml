@@ -1,0 +1,31 @@
+﻿@model List<Services.DTO.BookmarkDTO>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>URL</th>
+                <th>Short Description</th>
+                <th>Created Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+<tr>
+    <td>
+        @Html.ActionLink(item.url,
+            "AddClick", "Bookmarks",
+            new { url = item.url }, new { target = "_blank" })
+    </td>
+
+    <td>@item.shortdescription</td>
+    <td>@item.createdate.ToShortDateString()</td>
+</tr>            }
+
+        </tbody>
+    </table>
+</div>

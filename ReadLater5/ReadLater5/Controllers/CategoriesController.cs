@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Services.DTO;
 
 namespace ReadLater5.Controllers
 {
@@ -16,10 +17,11 @@ namespace ReadLater5.Controllers
         {
             _categoryService = categoryService;
         }
+
         // GET: Categories
         public IActionResult Index()
         {
-            List<Category> model = _categoryService.GetCategories();
+            List<CategoryDTO> model = _categoryService.GetCategories();
             return View(model);
         }
 
@@ -30,7 +32,7 @@ namespace ReadLater5.Controllers
             {
                 return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest);
             }
-            Category category = _categoryService.GetCategory((int)id);
+            CategoryDTO category = _categoryService.GetCategory((int)id);
             if (category == null)
             {
                 return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound);
@@ -46,8 +48,6 @@ namespace ReadLater5.Controllers
         }
 
         // POST: Categories/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Category category)
@@ -68,7 +68,7 @@ namespace ReadLater5.Controllers
             {
                 return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest);
             }
-            Category category = _categoryService.GetCategory((int)id);
+            CategoryDTO category = _categoryService.GetCategory((int)id);
             if (category == null)
             {
                 return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound);
@@ -77,11 +77,9 @@ namespace ReadLater5.Controllers
         }
 
         // POST: Categories/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Category category)
+        public IActionResult Edit(CategoryDTO category)
         {
             if (ModelState.IsValid)
             {
@@ -92,13 +90,13 @@ namespace ReadLater5.Controllers
         }
 
         // GET: Categories/Delete/5
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(int id)
         {
             if (id == null)
             {
                 return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest);
             }
-            Category category = _categoryService.GetCategory((int)id);
+            CategoryDTO category = _categoryService.GetCategory(id);
             if (category == null)
             {
                 return new StatusCodeResult(Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound);
@@ -111,7 +109,7 @@ namespace ReadLater5.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            Category category = _categoryService.GetCategory(id);
+            CategoryDTO category = _categoryService.GetCategory(id);
             _categoryService.DeleteCategory(category);
             return RedirectToAction("Index");
         }

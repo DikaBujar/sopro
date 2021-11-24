@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entity.DTO
+namespace Services.DTO
 {
     public class CategoryDTO
     {
@@ -13,6 +13,5 @@ namespace Entity.DTO
 
         [StringLength(maximumLength: 50)]
         public string name { get; set; }
-        public List<BookmarksDTO> BookmarksDTO { get; set; }
     }
 }
