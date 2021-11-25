@@ -17,6 +17,7 @@ namespace Services.DTO
 
         public string shortdescription { get; set; }
         public string userID { get; set; }
+        public int? CategoryId { get; set; }
 
         public virtual Category category { get; set; }
 

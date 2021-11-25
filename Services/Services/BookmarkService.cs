@@ -59,7 +59,7 @@ namespace Services
             if (bookmarks.URL != null)
             {
                 bookmarks.UserID = bookmark.userID;
-                bookmarks.CategoryId = bookmark.category.ID;
+                //bookmarks.CategoryId = bookmark.category.ID;
                 bookmarks.ID = (int)bookmark.id;
                 bookmarks.CreateDate = bookmark.createdate;
                 bookmarks.ShortDescription = bookmark.shortdescription;

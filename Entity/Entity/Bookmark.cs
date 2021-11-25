@@ -18,11 +18,11 @@ namespace Entity
 
         public string ShortDescription { get; set; }
 
+        public int? CategoryId { get; set; }
+
         public string UserID { get; set; }
 
-        public int? CategoryId { get; set; }
-        [ForeignKey(nameof(CategoryId))] 
-
+        [NotMapped]
         public virtual Category Category { get; set; }
 
         public DateTime CreateDate { get; set; }
